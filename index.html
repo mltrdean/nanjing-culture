@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>南京的城市文化解读｜Claude 风格长图</title>
+  <style>
+    :root {
+      --canvas: #faf9f5;
+      --surface: #f5f0e8;
+      --surface-card: #efe9de;
+      --surface-strong: #e8e0d2;
+      --ink: #141413;
+      --body: #3d3d3a;
+      --muted: #6c6a64;
+      --muted-soft: #8e8b82;
+      --hairline: #e6dfd8;
+      --coral: #cc785c;
+      --coral-active: #a9583e;
+      --dark: #181715;
+      --dark-elevated: #252320;
+      --teal: #5db8a6;
+      --amber: #e8a55a;
+      --red: #c64545;
+      --shadow: 0 24px 80px rgba(20, 20, 19, 0.10);
+      --radius-lg: 28px;
+      --radius-md: 18px;
+      --radius-sm: 12px;
+    }
+    * { box-sizing: border-box; }
+    html { background: #e9e1d6; scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 0%, rgba(204, 120, 92, 0.18), transparent 30%),
+        radial-gradient(circle at 92% 8%, rgba(93, 184, 166, 0.12), transparent 26%),
+        linear-gradient(180deg, var(--canvas), #f6f1e9 58%, #eee4d6);
+    }
+    .poster {
+      width: min(100%, 1080px);
+      margin: 0 auto;
+      padding: 42px 42px 64px;
+      position: relative;
+      overflow: hidden;
+    }
+    .poster::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(20,20,19,0.028) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(20,20,19,0.028) 1px, transparent 1px);
+      background-size: 36px 36px;
+      mask-image: linear-gradient(180deg, rgba(0,0,0,.55), transparent 68%);
+    }
+    .topbar {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0 34px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .brandmark {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+    }
+    .sun {
+      width: 28px;
+      height: 28px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--dark);
+      color: var(--canvas);
+      font-size: 14px;
+    }
+    .label {
+      border: 1px solid var(--hairline);
+      border-radius: 999px;
+      padding: 8px 14px;
+      background: rgba(250,249,245,.72);
+      backdrop-filter: blur(14px);
+    }
+    .hero {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 28px;
+      align-items: stretch;
+      min-height: 470px;
+    }
+    .hero-main {
+      border: 1px solid var(--hairline);
+      border-radius: 36px;
+      padding: 48px;
+      background:
+        linear-gradient(135deg, rgba(250,249,245,.92), rgba(245,240,232,.82)),
+        radial-gradient(circle at 78% 18%, rgba(204,120,92,.18), transparent 34%);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+    .hero-main::after {
+      content: "金陵";
+      position: absolute;
+      right: -24px;
+      bottom: -36px;
+      font-family: "Songti SC", "SimSun", serif;
+      font-size: 160px;
+      line-height: 1;
+      color: rgba(204,120,92,.08);
+      letter-spacing: -.08em;
+      pointer-events: none;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--coral-active);
+      margin-bottom: 26px;
+    }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--coral); }
+    h1 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Songti SC", "SimSun", serif;
+      font-weight: 400;
+      font-size: clamp(44px, 8.4vw, 88px);
+      line-height: 1;
+      letter-spacing: -0.055em;
+      color: var(--ink);
+      text-wrap: balance;
+    }
+    .subtitle {
+      margin: 24px 0 0;
+      max-width: 560px;
+      font-size: clamp(19px, 2.5vw, 25px);
+      line-height: 1.42;
+      letter-spacing: -0.02em;
+      color: var(--body);
+      font-weight: 500;
+      text-wrap: pretty;
+    }
+    .subtitle strong { color: var(--coral-active); font-weight: 600; }
+    .hero-side { display: flex; flex-direction: column; gap: 18px; }
+    .quote-card, .metric-card {
+      border-radius: 28px;
+      padding: 30px;
+      background: var(--dark);
+      color: var(--canvas);
+      box-shadow: 0 24px 80px rgba(20, 20, 19, .18);
+      min-height: 224px;
+      position: relative;
+      overflow: hidden;
+    }
+    .quote-card::before {
+      content: "“";
+      position: absolute;
+      right: 22px;
+      top: -26px;
+      font-family: Georgia, serif;
+      font-size: 150px;
+      color: rgba(250,249,245,.08);
+    }
+    .quote-card p { margin: 0; font-family: Georgia, "Songti SC", serif; font-size: 31px; line-height: 1.24; letter-spacing: -0.035em; }
+    .metric-card { min-height: 0; background: var(--coral); color: white; padding: 24px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .metric { padding: 18px; border-radius: 18px; background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.18); }
+    .metric b { display: block; font-size: 26px; line-height: 1; letter-spacing: -0.04em; margin-bottom: 8px; font-family: Georgia, serif; font-weight: 400; }
+    .metric span { font-size: 13px; opacity: .86; }
+    .tags { position: relative; z-index: 1; display: flex; flex-wrap: wrap; gap: 12px; margin: 28px 0 38px; }
+    .tag { padding: 12px 16px; border: 1px solid var(--hairline); border-radius: 999px; color: var(--body); background: rgba(250,249,245,.68); font-size: 15px; font-weight: 500; }
+    .section-title { position: relative; z-index: 1; display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin: 64px 0 24px; border-top: 1px solid var(--hairline); padding-top: 36px; }
+    .section-title h2 { margin: 0; font-family: Georgia, "Songti SC", serif; font-weight: 400; font-size: 52px; line-height: 1; letter-spacing: -0.055em; }
+    .section-title p { margin: 0; max-width: 420px; color: var(--muted); font-size: 16px; line-height: 1.65; }
+    .grid { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .card { border: 1px solid var(--hairline); background: rgba(245,240,232,.78); border-radius: var(--radius-lg); padding: 30px; min-height: 260px; position: relative; overflow: hidden; }
+    .card.wide { grid-column: span 2; }
+    .card.dark { background: var(--dark); color: var(--canvas); border-color: rgba(255,255,255,.08); }
+    .card.coral { background: var(--coral); color: #fff; border: none; }
+    .card-num { font-family: Georgia, serif; font-size: 18px; color: var(--coral); margin-bottom: 18px; }
+    .dark .card-num, .coral .card-num { color: rgba(255,255,255,.72); }
+    .card h3 { margin: 0 0 16px; font-family: Georgia, "Songti SC", serif; font-size: 34px; font-weight: 400; line-height: 1.12; letter-spacing: -0.04em; }
+    .card p { margin: 0; color: var(--body); font-size: 16px; line-height: 1.78; }
+    .dark p, .coral p { color: rgba(255,255,255,.78); }
+    .small-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 22px; }
+    .pill { border-radius: 999px; background: var(--canvas); color: var(--body); padding: 10px 13px; font-size: 14px; border: 1px solid var(--hairline); white-space: nowrap; }
+    .dark .pill { background: var(--dark-elevated); color: rgba(255,255,255,.82); border-color: rgba(255,255,255,.08); }
+    .coral .pill { background: rgba(255,255,255,.16); color: #fff; border-color: rgba(255,255,255,.22); }
+    .timeline { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-top: 20px; }
+    .era { border-radius: 20px; background: var(--surface-card); border: 1px solid var(--hairline); padding: 18px 16px; min-height: 138px; }
+    .era b { display: block; font-family: Georgia, serif; color: var(--coral-active); font-size: 22px; margin-bottom: 10px; font-weight: 400; }
+    .era span { font-size: 13px; line-height: 1.5; color: var(--muted); }
+    .city-mood { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; position: relative; z-index: 1; }
+    .mood { border-radius: 28px; padding: 28px; background: var(--surface-card); border: 1px solid var(--hairline); min-height: 220px; }
+    .mood i { display: block; font-style: normal; font-size: 36px; margin-bottom: 18px; }
+    .mood h3 { margin: 0 0 12px; font-family: Georgia, "Songti SC", serif; font-weight: 400; font-size: 30px; letter-spacing: -0.035em; }
+    .mood p { margin: 0; color: var(--muted); line-height: 1.7; font-size: 15px; }
+    .statement { position: relative; z-index: 1; margin-top: 22px; border-radius: 34px; padding: 46px; background: var(--dark); color: var(--canvas); display: grid; grid-template-columns: .85fr 1.15fr; gap: 32px; overflow: hidden; }
+    .statement::after { content: "NANJING"; position: absolute; right: -16px; bottom: -20px; color: rgba(255,255,255,.045); font-size: 112px; font-weight: 800; letter-spacing: -0.08em; }
+    .statement h2 { margin: 0; font-family: Georgia, "Songti SC", serif; font-weight: 400; font-size: 56px; line-height: .98; letter-spacing: -0.055em; }
+    .statement p { margin: 0; color: rgba(255,255,255,.78); font-size: 21px; line-height: 1.66; letter-spacing: -0.015em; }
+    .final-card { position: relative; z-index: 1; margin-top: 20px; border-radius: 34px; padding: 42px; background: var(--coral); color: #fff; display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: center; }
+    .final-card h2 { margin: 0 0 10px; font-family: Georgia, "Songti SC", serif; font-weight: 400; font-size: 42px; letter-spacing: -0.04em; }
+    .final-card p { margin: 0; color: rgba(255,255,255,.82); font-size: 17px; line-height: 1.7; }
+    .seal { width: 118px; height: 118px; border-radius: 50%; border: 1px solid rgba(255,255,255,.36); display: grid; place-items: center; font-family: Georgia, "Songti SC", serif; font-size: 32px; line-height: 1.1; text-align: center; background: rgba(255,255,255,.08); }
+    .footer { position: relative; z-index: 1; margin-top: 28px; display: flex; justify-content: space-between; gap: 24px; color: var(--muted); font-size: 13px; border-top: 1px solid var(--hairline); padding-top: 22px; }
+    @media (max-width: 860px) {
+      .poster { padding: 26px 18px 42px; }
+      .topbar { flex-wrap: wrap; gap: 12px; padding-bottom: 24px; }
+      .label { font-size: 13px; }
+      .hero { grid-template-columns: 1fr; min-height: 0; gap: 18px; }
+      .hero-main { padding: 34px 28px; border-radius: 28px; }
+      .hero-main::after { font-size: 112px; right: -18px; bottom: -24px; }
+      .quote-card, .metric-card { border-radius: 24px; padding: 24px; min-height: auto; }
+      .grid { grid-template-columns: 1fr; gap: 16px; }
+      .card { padding: 24px; min-height: auto; border-radius: 24px; }
+      .card.wide { grid-column: span 1; }
+      .timeline { grid-template-columns: repeat(2, 1fr); }
+      .city-mood { grid-template-columns: 1fr; gap: 16px; }
+      .section-title { display: block; margin: 48px 0 20px; padding-top: 28px; }
+      .section-title h2 { margin-bottom: 12px; }
+      .statement, .final-card { grid-template-columns: 1fr; padding: 30px 26px; border-radius: 26px; }
+      .statement::after { font-size: 70px; }
+      .seal { width: 92px; height: 92px; }
+    }
+
+    @media (max-width: 560px) {
+      .poster { padding: 20px 14px 34px; }
+      .brandmark { font-size: 13px; }
+      .sun { width: 24px; height: 24px; }
+      .hero-main { padding: 30px 22px; }
+      .eyebrow { font-size: 12px; margin-bottom: 20px; letter-spacing: .08em; }
+      h1 { font-size: clamp(40px, 14vw, 56px); line-height: 1.04; letter-spacing: -0.045em; }
+      .subtitle { margin-top: 20px; font-size: 18px; line-height: 1.5; }
+      .quote-card p { font-size: 21px; line-height: 1.42; }
+      .metric-card { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .metric { padding: 14px; }
+      .metric b { font-size: 22px; }
+      .tags { gap: 8px; margin: 22px 0 32px; }
+      .tag { font-size: 13px; padding: 9px 12px; }
+      .section-title h2 { font-size: 30px; line-height: 1.14; }
+      .section-title p, .card p, .mood p, .final-card p { font-size: 15px; line-height: 1.72; }
+      .card h3 { font-size: 24px; line-height: 1.24; }
+      .small-list { grid-template-columns: 1fr; gap: 8px; }
+      .pill { font-size: 13px; white-space: normal; }
+      .timeline { grid-template-columns: 1fr; }
+      .era { min-height: auto; padding: 16px; }
+      .mood { padding: 24px; min-height: auto; }
+      .statement h2 { font-size: 31px; }
+      .statement p { font-size: 16px; }
+      .final-card h2 { font-size: 28px; }
+      .footer { display: block; line-height: 1.8; }
+    }
+    @media print { html, body { background: var(--canvas); } .poster { width: 1080px; padding: 42px; } }
+  </style>
+</head>
+<body>
+  <main class="poster">
+    <nav class="topbar">
+      <div class="brandmark"><span class="sun">✶</span><span>City Culture Notes</span></div>
+      <div class="label">南京｜历史 × 文化 × 人文</div>
+    </nav>
+    <section class="hero">
+      <div class="hero-main">
+        <div class="eyebrow"><span class="dot"></span> The spirit of Jinling</div>
+        <h1>南京<br />城市文化解读</h1>
+        <p class="subtitle">它不是一座单纯“胜利者书写”的城市，而是一座<strong>历史本身留下伤痕、文脉仍在流动</strong>的城市。</p>
+      </div>
+      <aside class="hero-side">
+        <div class="quote-card"><p>如果北京代表帝国秩序，西安代表盛唐气象，那么南京更像中国历史情绪的容器。</p></div>
+        <div class="metric-card">
+          <div class="metric"><b>六朝</b><span>文明南渡的起点</span></div>
+          <div class="metric"><b>金陵</b><span>江南文脉的别名</span></div>
+          <div class="metric"><b>明都</b><span>帝国规划的辉煌</span></div>
+          <div class="metric"><b>民国</b><span>现代中国的实验场</span></div>
+        </div>
+      </aside>
+    </section>
+    <div class="tags">
+      <span class="tag">历史厚重</span><span class="tag">文化深邃</span><span class="tag">人文荟萃</span><span class="tag">忧患意识</span><span class="tag">温润内敛</span><span class="tag">繁华背后的苍凉</span>
+    </div>
+    <section class="section-title">
+      <h2>一座城市，八重文脉</h2>
+      <p>南京的复杂性，不在于它拥有多少古迹，而在于它把王朝兴亡、江南审美、士人精神、现代转型与历史创伤叠合在同一座城市中。</p>
+    </section>
+    <section class="grid">
+      <article class="card"><div class="card-num">01</div><h3>六朝古都：文明南渡的起点</h3><p>东吴、东晋、宋、齐、梁、陈相继以建业、建康为都。南京由此成为汉文明南渡的核心，也开启了中国文化重心由北方向江南转移的重要阶段。</p><div class="small-list"><span class="pill">士族文化中心</span><span class="pill">山水审美诞生地</span><span class="pill">文人精神成熟地</span><span class="pill">南方政治核心</span></div></article>
+      <article class="card"><div class="card-num">02</div><h3>士族文化：南京最深层的灵魂</h3><p>王导、王羲之、谢安、谢灵运等门阀士族，让南京形成清谈、玄学、书法、山水诗与人格风骨交织的气质。它重精神，不尚粗鄙；重分寸，不喜喧哗。</p><div class="small-list"><span class="pill">清谈文化</span><span class="pill">魏晋风度</span><span class="pill">山水诗画</span><span class="pill">人格风骨</span></div></article>
+      <article class="card coral wide"><div class="card-num">03</div><h3>明代南京：山水与帝气结合的都城</h3><p>朱元璋定都南京，使其成为明朝开国之都。南京城墙、明孝陵、宫城遗址与城市格局，共同构成“紫金山为靠、长江为势、秦淮为脉”的帝国城市样本。与北京的权力秩序不同，南京更强调山水与王气的交融。</p></article>
+      <article class="card dark"><div class="card-num">04</div><h3>秦淮烟水：繁华背后的苍凉</h3><p>秦淮河是南京文人情绪的核心意象。杜牧《泊秦淮》、孔尚任《桃花扇》、吴敬梓《儒林外史》，都让秦淮不只是风月之地，更成为盛世幻灭、家国之痛与文人哀愁的象征。</p></article>
+      <article class="card"><div class="card-num">05</div><h3>民国南京：现代性的实验场</h3><p>民国时期，南京成为中国现代国家建设的重要现场。中山陵、总统府、民国建筑、梧桐大道与高校体系，让这座城市拥有一种介于古典与现代之间的知识分子气质。</p></article>
+      <article class="card"><div class="card-num">06</div><h3>历史创伤：城市的深刻记忆</h3><p>南京经历了六朝兴亡、南唐覆灭、太平天国与南京大屠杀等重大历史事件。正因如此，它的城市精神常带有克制、安静、悲悯与强烈的历史感。</p></article>
+      <article class="card dark"><div class="card-num">07</div><h3>南京人的性格：慢，但不弱</h3><p>南京人有文化自尊，但不张扬；讲礼数，也重情义；城市节奏相对从容，却有很强的内在稳定性。这是一种“读过历史的人”的性格。</p></article>
+      <article class="card wide"><div class="card-num">08</div><h3>南京的真正地位：不是古都标签，而是中国历史情绪的容器</h3><p>南京并不总以最强势的姿态出现，却总能在中国历史的重要转折处留下痕迹。它把帝王之气、江南文气、现代知识气、历史伤痛与市井温情放在一起，形成一种中国城市中少见的深沉气质。</p></article>
+    </section>
+    <section class="section-title"><h2>六朝到近代，一条时间线</h2><p>理解南京，不应只看某一个时代，而要看它如何在一次次兴亡之间，不断重塑自己的文化身份。</p></section>
+    <section class="timeline"><div class="era"><b>东吴</b><span>建业为都，南京进入国家政治中心视野。</span></div><div class="era"><b>东晋</b><span>衣冠南渡，士族文化在建康成熟。</span></div><div class="era"><b>南朝</b><span>文学、玄学、山水审美汇聚，形成六朝风流。</span></div><div class="era"><b>明初</b><span>应天府成为开国之都，城市格局达到高峰。</span></div><div class="era"><b>民国</b><span>现代国家想象、教育体系与城市规划并行。</span></div><div class="era"><b>当代</b><span>科教、产业与历史文化共同构成现代南京。</span></div></section>
+    <section class="section-title"><h2>南京的三种气质</h2><p>真正的南京，不只是历史古城，也不只是现代省会，而是一种复合型城市人格。</p></section>
+    <section class="city-mood"><div class="mood"><i>📖</i><h3>文气</h3><p>高校、书院、文人传统与秦淮意象，构成南京最稳定的精神底色。</p></div><div class="mood"><i>🌫️</i><h3>烟水气</h3><p>长江、秦淮、紫金山与梧桐，把南京塑造成一座温润而有层次的城市。</p></div><div class="mood"><i>🕯️</i><h3>历史感</h3><p>它不回避伤痛，也不轻易炫耀繁华，因此拥有少见的克制与悲悯。</p></div></section>
+    <section class="statement"><h2>南京不喧哗，<br />但它非常厚重。</h2><p>它像一本需要慢慢读的书：翻开是六朝烟水，继续读是明都王气，再往深处，是民国梧桐、秦淮灯影与历史伤痕。南京的魅力，不在一眼惊艳，而在越读越深。</p></section>
+    <section class="final-card"><div><h2>一句话总结</h2><p>南京是一座把王朝兴亡、文人精神、江南审美、现代转型与历史悲悯同时装进城市肌理里的中国精神之城。</p></div><div class="seal">金陵<br />读城</div></section>
+    <footer class="footer"><span>Designed as a long-form editorial infographic</span><span>Warm canvas · Coral accent · Literary layout</span></footer>
+  </main>
+</body>
+</html>
